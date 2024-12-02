@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="MVBoost" />
+    <meta
+      name="keywords"
+      content="MVBoost, Multi-view Image Generation, 3D Reconstruction Model" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MV-Adapter: Multi-view Consistent Image Generation Made Easy</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
+    <!-- <link rel="icon" href="./static/images/favicon.svg" /> -->
+
+    <style>
+      .render_wrapper {
+        position: relative;
+        height: 350px;
+      }
+      .external-link {
+        color: #ffffff !important;
+        background-color: rgb(104, 161, 135) !important;
+        border-radius: 10px !important;
+        font-size: 12px !important;
+      }
+
+      .external-link .icon {
+        font-size: 20px !important;
+      }
+
+      .external-link:hover {
+        background-color: #555555 !important;
+      }
+
+      .conference {
+        font-family: "Google Sans", sans-serif;
+        color: hsl(240, 2%, 10%) !important;
+        font-family: "Merriweather", serif;
+        font-weight: 500;
+      }
+
+      .results-carousel textbox {
+        font-size: 7px;
+        font-family: "Google Sans", cursive, sans-serif;
+        color: hsl(321, 56%, 56%) !important;
+      }
+      .dialog-box {
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(96, 85, 85, 0.494);
+        padding: 10px;
+        border-radius: 15px;
+        z-index: 1000;
+        font-size: 14px;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        color: hsl(322, 33%, 22%) !important;
+        font-weight: bold;
+      }
+    </style>
+
+    <!-- Import the component -->
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                MVBoost: Boost 3D Reconstruction with Multi-View Refinement
+              </h1>
+              <div class="is-size-5 publication-authors">Xiangyu Liu,
+                  <a href="https://scholar.google.com/citations?hl=en&user=-i9dCxYAAAAJ">Xiaomei Zhang</a>, 
+                  <a href="https://scholar.google.com/citations?user=F15mLDYAAAAJ&hl=en">Zhiyuan Ma</a>,
+                  <a href="https://scholar.google.com/citations?user=1rbNk5oAAAAJ&hl=zh-CN">Xiangyu Zhu</a> , 
+                  <a href="https://scholar.google.com/citations?user=cuJ3QG8AAAAJ&hl=en">Zhen Lei</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+              <p>
+                <b>TL;DR:</b> 
+                MVBoost is a novel framework designed to boost 3D reconstruction 
+                by utilizing
+                <font color="#3a86ff"
+                  ><b>refined pseudo-ground truth</b></font
+                >,
+                capitalizing on the high accuracy of the multi-view generation model 
+                and the consistency of the 3D reconstruction model 
+                to improve overall reconstruction quality.
+                
+      
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero is-light is-small">
+      <div class="hero-body">
+        <div class="container is-centered">
+          <div class="has-text-centered">
+            <video
+              id="dollyzoom"
+              autoplay
+              controls
+              muted
+              loop
+              playsinline
+              width="80%">
+              <source src="./videos/teaser.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-four-fifths">
+              <b>Row 1</b> shows results by integrating MV-Adapter with
+              <font color="#3a86ff"
+                ><b
+                  >personalized T2Is, distilled few-step T2Is, and
+                  ControlNets</b
+                ></font
+              >, demonstrating its adaptability. <b>Row 2</b> shows results
+              under various control signals, including
+              <font color="#3a86ff"
+                ><b>view-guided or geometry-guided</b>
+              </font>
+              generation with
+              <font color="#3a86ff"><b>text or image inputs</b></font
+              >, showcasing its versatility.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Recent advancements in 3D object reconstruction have been remarkable, 
+                yet most current 3D models rely heavily on existing 3D datasets. 
+                The scarcity of diverse 3D datasets results in limited generalization 
+                capabilities of 3D reconstruction models. In this paper, 
+                we propose a novel framework for boosting 3D reconstruction with 
+                multi-view refinement (MVBoost) by generating pseudo-GT data. 
+                The key of MVBoost is combining the advantages of the high accuracy of 
+                the multi-view generation model and the consistency of the 3D 
+                reconstruction model to create a reliable data source. Specifically, 
+                given a single-view input image, we employ a multi-view diffusion 
+                model to generate multiple views, followed by a large 3D reconstruction 
+                model to produce consistent 3D data. MVBoost then adaptively refines 
+                these multi-view images, rendered from the consistent 3D data, 
+                to build a large-scale multi-view dataset for training a feed-forward 
+                3D reconstruction model. Additionally, the input view optimization 
+                is designed to optimize the corresponding viewpoints based on the user's 
+                input image, ensuring that the most important viewpoint is accurately 
+                tailored to the user's needs. Extensive evaluations demonstrate that our 
+                method achieves superior reconstruction results and robust generalization 
+                compared to prior works.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--/ Abstract. -->
+      </div>
+    </section>
+  </body>
+</html>
